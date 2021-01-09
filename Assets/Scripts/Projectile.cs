@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
 
     #region Variables
     private Rigidbody2D m_RigidBody;
-    private CircleCollider2D m_CircleCollider;
+    private Collider2D m_Collider2D;
     #endregion
 
     //-----------------------------------------------------------------
@@ -17,16 +17,47 @@ public class Projectile : MonoBehaviour
     private void Awake()
     {
         m_RigidBody = GetComponent<Rigidbody2D>();
-        m_CircleCollider = GetComponent<CircleCollider2D>();
+        m_Collider2D = GetComponent<Collider2D>();
+        DisableCollider();
+    }
+
+    private void Update()
+    {
+        
+        Vector2 vel = m_RigidBody.velocity;
+        float angle = Mathf.Atan2(vel.y, vel.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        transform.position += new Vector3(0, -0.15f); 
+        m_RigidBody.velocity = new Vector2(0, 0);
+        m_RigidBody.simulated = false;
+        Destroy(gameObject.GetComponent<Rigidbody2D>());
+        Destroy(gameObject.GetComponent<Collider2D>());
+        Destroy(this);
+    }
+
+    private void EnableCollider()
+    {
+        m_Collider2D.enabled = true;
+    }
+
+    private void DisableCollider()
+    {
+        m_Collider2D.enabled = false;
     }
     #endregion
 
     //-----------------------------------------------------------------
 
     #region Public Methods
-    public void Push(Vector2 force)
+
+    public void Shoot(Vector2 force)
     {
         m_RigidBody.AddForce(force, ForceMode2D.Impulse);
+        Invoke("EnableCollider", 0.3f);
     }
 
     public void ActivateRb()
@@ -39,6 +70,7 @@ public class Projectile : MonoBehaviour
         m_RigidBody.velocity = Vector3.zero;
         m_RigidBody.angularVelocity = 0f;
         m_RigidBody.isKinematic = true;
+
     }
     #endregion
 

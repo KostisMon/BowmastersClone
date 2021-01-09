@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System;
+using Cinemachine;
+using TMPro;
 
 public enum GameState { MainMenu, PlayerPlays, EnemyPlays }
 public delegate void OnStateChangeHandler();
@@ -28,10 +30,11 @@ public class GameManager : MonoBehaviour
     public event OnStateChangeHandler OnStateChange;
     public Action OnAppPaused = delegate { };
     public Action OnAppUnpaused = delegate { };
-
+    public CinemachineVirtualCamera Cinemachine;
     public GameObject Projectile;
+    public float PowerMultiplier;
 
-    public float ForceMultiplier;
+    public GameObject LeftHand,RightHand;
 
     [Header("Trajectory System")]
     public GameObject TrajectoryPoint;
@@ -39,9 +42,13 @@ public class GameManager : MonoBehaviour
     public GameObject TrajectoryParent;
     public int TrajectoryPointCount;
     public float TrajectoryPointSpacing;
-    [SerializeField] [Range(0.01f, 0.5f)] public float TrajectoryPointMinScale;
-    [SerializeField] [Range(0.5f, 1.5f)] public float TrajectoryPointMaxScale;
+    [SerializeField] [Range(0.01f, 0.05f)] public float TrajectoryPointMinScale;
+    [SerializeField] [Range(0.05f, 1f)] public float TrajectoryPointMaxScale;
 
+    [Header("UI System")]
+    public TextMeshProUGUI PowerText;
+    public TextMeshProUGUI AngleText;
+    public GameObject TrajectoryCanvasObj;
     #endregion
 
     //-----------------------------------------------------------------
@@ -57,7 +64,6 @@ public class GameManager : MonoBehaviour
     {
         Screen.orientation = ScreenOrientation.Landscape;
         Application.targetFrameRate = 30;
-
         CameraManager.Instance.Init();
         InputManager.Instance.Init();
         TrajectoryManager.Instance.Init();
@@ -106,8 +112,18 @@ public class GameManager : MonoBehaviour
 
     public void ShootProjectile(Vector2 force)
     {
-        GameObject projectile = Instantiate(Projectile, TrajectoryStartPos.transform.position, Quaternion.identity);
-        projectile.GetComponent<Projectile>().Push(force);
+        Quaternion rotation = Quaternion.AngleAxis(TrajectoryManager.Instance.Angle, Vector3.forward);
+        GameObject projectile = Instantiate(Projectile, TrajectoryStartPos.transform.position, rotation);
+        
+        projectile.GetComponent<Projectile>().Shoot(force);
+        CameraManager.Instance.SetCinemachineFollowTransform(projectile.transform);
+    }
+
+
+
+    public CinemachineVirtualCamera GetVirtualCamera()
+    {
+        return Cinemachine;
     }
     #endregion
     //-----------------------------------------------------------------

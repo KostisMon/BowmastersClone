@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraManager : Singleton<CameraManager>
 {
@@ -8,6 +9,7 @@ public class CameraManager : Singleton<CameraManager>
 
     #region Variables
     private float m_CamInitialSize;
+    private CinemachineVirtualCamera m_VirtualCamera;
     private Camera m_MainCamera;
     #endregion
 
@@ -18,18 +20,25 @@ public class CameraManager : Singleton<CameraManager>
     {
         m_CamInitialSize = Camera.main.orthographicSize;
         m_MainCamera = Camera.main;
+        m_VirtualCamera = GameManager.Instance.Cinemachine;//GetVirtualCamera();
+        
     }
     
     public void Update()
     {
-
+       
     }
 
+    public void SetCinemachineFollowTransform(Transform followTransform)
+    {
+
+       // m_VirtualCamera.Follow = followTransform;
+    }
 
     public void SetCameraSize(float distance)
     {
-        m_MainCamera.orthographicSize = distance + m_CamInitialSize;
-        m_MainCamera.orthographicSize = Mathf.Clamp(m_MainCamera.orthographicSize, 3f, 8f);
+        m_VirtualCamera.m_Lens.OrthographicSize = distance + m_CamInitialSize;
+        m_VirtualCamera.m_Lens.OrthographicSize = Mathf.Clamp(m_VirtualCamera.m_Lens.OrthographicSize, 3f, 8f);
     }
     #endregion
 
