@@ -61,16 +61,12 @@ public class TrajectoryManager : Singleton<TrajectoryManager>
 
         if (!GameManager.Instance.TrajectoryParent.activeSelf)
         {
-            if (m_Power > 2f)
+            if (m_Power > 0f)
             {
-                ShowTrajectory(true);
+                ShowTrajectory(true);               
             }
         }
-        if (m_Power > 2f)
-        {
-            UiManager.Instance.SetPowerAndAngleText(m_Power, m_Angle);
-            UiManager.Instance.ShowPowerAndAngleUi(true);
-        }
+        
         
     }
 
@@ -156,7 +152,7 @@ public class TrajectoryManager : Singleton<TrajectoryManager>
         start.z = 0;
 
         Vector3 dir = mousePos - start;
-        m_Angle = Vector2.SignedAngle(dir, GameManager.Instance.LeftHand.transform.parent.transform.right);
+        m_Angle = Vector2.SignedAngle(dir, GameManager.Instance.Player.LeftArm.transform.parent.transform.right);
         m_Angle = m_Angle >= 0 ? 180 - m_Angle : -(180 + m_Angle);
 
     }

@@ -29,14 +29,38 @@ public class Projectile : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("Player")  )
+        {
+            GameManager.Instance.Player.TakeDamage(5f);
+        }
+        else if (collision.CompareTag("Enemy"))
+        {
+            GameManager.Instance.Enemy.TakeDamage(5f);
+        }
+        else if (collision.CompareTag("Border"))
+        {
+            if (GameManager.Instance.GetState() == GameState.PlayerShoots)
+            {
+                GameManager.Instance.SetState(GameState.EnemyAims);
+            }
+            else if (GameManager.Instance.GetState() == GameState.EnemyShoots)
+            {
+                GameManager.Instance.SetState(GameState.PlayerAims);
+            }
+            return;
+        }
         transform.position += new Vector3(0, -0.15f); 
         m_RigidBody.velocity = new Vector2(0, 0);
         m_RigidBody.simulated = false;
         Destroy(gameObject.GetComponent<Rigidbody2D>());
         Destroy(gameObject.GetComponent<Collider2D>());
         Destroy(this);
+
+        //Debug
+        GameManager.Instance.SetState(GameState.PlayerAims);
     }
 
     private void EnableCollider()

@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
 using System;
-using Cinemachine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
-public enum GameState { MainMenu, PlayerPlays, EnemyPlays }
+public enum GameState { MainMenu, PlayerAims, PlayerShoots, EnemyAims, EnemyShoots, EndGame }
 public delegate void OnStateChangeHandler();
 
 
@@ -24,17 +25,27 @@ public class GameManager : MonoBehaviour
     //-----------------------------------------------------------------
 
     #region Variables
-    public GameState GameState { get; private set; }
+    private GameState m_CurGameState;
 
     public static bool IsAppPaused;
     public event OnStateChangeHandler OnStateChange;
     public Action OnAppPaused = delegate { };
     public Action OnAppUnpaused = delegate { };
-    public CinemachineVirtualCamera Cinemachine;
-    public GameObject Projectile;
+
+    [Header("Camera System")]
+    public CinemachineBrain VcamBrain;
+    public CinemachineVirtualCamera PlayerVcam;
+    public CinemachineVirtualCamera EnemyVcam;
+    public CinemachineVirtualCamera ProjectileVcam;
+
+    [Header("Shooting System")]
+    public GameObject ProjectilePrefab;
+    public GameObject CurrentProjectile;
     public float PowerMultiplier;
 
-    public GameObject LeftHand,RightHand;
+    [Header("Player System")]
+    public Player Player;
+    public Player Enemy;
 
     [Header("Trajectory System")]
     public GameObject TrajectoryPoint;
@@ -49,6 +60,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI PowerText;
     public TextMeshProUGUI AngleText;
     public GameObject TrajectoryCanvasObj;
+    public GameObject MainMenu;
+    public Image PlayerHealthImage;
+    public Image EnemyHealthImage;
     #endregion
 
     //-----------------------------------------------------------------
@@ -57,21 +71,26 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         s_Instance = this;
-        SetState(GameState.PlayerPlays);
+        SetState(GameState.MainMenu);
+
     }
 
     private void Start()
     {
         Screen.orientation = ScreenOrientation.Landscape;
         Application.targetFrameRate = 30;
+        UiManager.Instance.Init();
         CameraManager.Instance.Init();
         InputManager.Instance.Init();
         TrajectoryManager.Instance.Init();
+
     }
 
     private void Update()
     {
         InputManager.Instance.Update();
+        CameraManager.Instance.Update();
+        UiManager.Instance.Update();
     }
 
     private void FixedUpdate()
@@ -98,7 +117,7 @@ public class GameManager : MonoBehaviour
     #region Public Methods
     public void SetState(GameState state)
     {
-        this.GameState = state;
+        m_CurGameState = state;
         if (OnStateChange != null)
         {
             OnStateChange();
@@ -107,24 +126,27 @@ public class GameManager : MonoBehaviour
 
     public GameState GetState()
     {
-        return this.GameState;
+        return m_CurGameState;
     }
 
     public void ShootProjectile(Vector2 force)
     {
         Quaternion rotation = Quaternion.AngleAxis(TrajectoryManager.Instance.Angle, Vector3.forward);
-        GameObject projectile = Instantiate(Projectile, TrajectoryStartPos.transform.position, rotation);
-        
-        projectile.GetComponent<Projectile>().Shoot(force);
-        CameraManager.Instance.SetCinemachineFollowTransform(projectile.transform);
+        GameObject projectile = Instantiate(ProjectilePrefab, TrajectoryStartPos.transform.position, rotation);
+        CurrentProjectile = projectile;
+        CurrentProjectile.GetComponent<Projectile>().Shoot(force);
     }
 
-
-
-    public CinemachineVirtualCamera GetVirtualCamera()
+    public void PlayerWon()
     {
-        return Cinemachine;
+        throw new NotImplementedException();
     }
+
+    public void EnemyWon()
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
     //-----------------------------------------------------------------
 

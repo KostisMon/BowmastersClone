@@ -28,36 +28,21 @@ public class InputManager : Singleton<InputManager>
 
     public void Update()
     {
-        if (GameManager.Instance.GameState == GameState.PlayerPlays)
+        if (GameManager.Instance.GetState() == GameState.PlayerAims)
         {
             if (m_Aiming)
             {
                 m_EndPoint =  Input.mousePosition;
                 
-                CameraManager.Instance.SetCameraSize(TrajectoryManager.Instance.Distance);
                 TrajectoryManager.Instance.CalculateTrajectory(m_StartPoint, m_EndPoint);
+                GameManager.Instance.Player.ArmsFollow(m_EndPoint);
+                CameraManager.Instance.SetCameraSize(TrajectoryManager.Instance.Distance);
 
-                
-
-                Vector3 mousePosition = Input.mousePosition;
-                mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-                Vector2 directionLeft = new Vector2(
-                mousePosition.x - GameManager.Instance.LeftHand.transform.position.x,
-                mousePosition.y - GameManager.Instance.LeftHand.transform.position.y
-                );
-                Vector2 directionRight = new Vector2(
-                mousePosition.x - GameManager.Instance.RightHand.transform.position.x,
-                mousePosition.y - GameManager.Instance.RightHand.transform.position.y
-                );
-                GameManager.Instance.RightHand.transform.up = directionLeft;
-
-                GameManager.Instance.LeftHand.transform.up = directionLeft;
 
 
             }
             if (!m_Aiming && Input.GetMouseButtonDown(0))
             {
-                //m_StartPoint = Camera.main.ScreenToWorldPoint( Input.mousePosition);
                 m_StartPoint =  Input.mousePosition;
 
                 m_Aiming = true;
@@ -65,15 +50,18 @@ public class InputManager : Singleton<InputManager>
             }
             if (Input.GetMouseButtonUp(0))
             {
-
                 m_Aiming = false;
+                if (Mathf.Abs(TrajectoryManager.Instance.ForceVector.x )>1f)
+                {
+                    GameManager.Instance.ShootProjectile(TrajectoryManager.Instance.ForceVector);
+                    GameManager.Instance.SetState(GameState.PlayerShoots);
 
-                GameManager.Instance.ShootProjectile(TrajectoryManager.Instance.ForceVector);
+                }
 
                 TrajectoryManager.Instance.ShowTrajectory(false);
                 UiManager.Instance.ShowPowerAndAngleUi(false);
                 
-                //GameManager.Instance.SetState(GameState.EnemyPlays);
+                
             }
         }
     }
