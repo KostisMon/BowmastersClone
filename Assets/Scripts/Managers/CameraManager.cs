@@ -32,6 +32,31 @@ public class CameraManager : Singleton<CameraManager>
        
     }
 
+    public bool CheckIfCharVisible(Player.PlayerType type)
+    {
+        Vector3 viewPos = Vector3.zero;
+        switch (type)
+        {
+            case Player.PlayerType.Player:
+                viewPos = Camera.main.WorldToViewportPoint(GameManager.Instance.Player.transform.position);
+
+                break;
+            case Player.PlayerType.Enemy:
+                viewPos = Camera.main.WorldToViewportPoint(GameManager.Instance.Enemy.transform.position);
+
+                break;
+        }
+        if (viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+
+    }
     public void SetActiveVirtualCamera(GameState state, CinemachineVirtualCamera vCam)
     {
         m_PrevActiveVirtualCamera = m_ActiveVirtualCamera;

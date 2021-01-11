@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,62 +10,49 @@ public class UiManager : Singleton<UiManager>
 
     #region Variables
 
-    private TextMeshProUGUI m_PowerText, m_AngleText;
-    private Button m_PlayButton;
-    
+    public enum MenuState
+    {
+        StartMenu,
+        InGameMenu,
+        Count
+    }
+
+    private MenuState m_CurrentMenuState = MenuState.Count;
+    public Dictionary<string, Menu> MenuDictionary = new Dictionary<string, Menu>();
+    public StartMenu StartMenu;
+    public InGameMenu InGameMenu;
+
     #endregion
 
     //-----------------------------------------------------------------
 
     #region Public Methods
-    
+
+    public void Awake()
+    {
+        Menu[] menus = Object.FindObjectsOfType<Menu>();
+        for (int i = 0; i < menus.Length; i++)
+        {
+            MenuDictionary.Add(menus[i].name, menus[i]);
+            menus[i].Awake();
+            menus[i].Show(false);
+        }
+    }
+
     public void Init()
     {
-        m_PlayButton = GameManager.Instance.MainMenu.GetComponentInChildren<Button>();
-        m_PlayButton.onClick.AddListener(PlayGame);
+        StartMenu = (StartMenu)MenuDictionary[MenuState.StartMenu.ToString()];
+        InGameMenu = (InGameMenu)MenuDictionary[MenuState.InGameMenu.ToString()];
+        SetState(MenuState.StartMenu);
+        InGameMenu.Init();
     }
 
-    public void Update()
+    public void SetState(MenuState state)
     {
-        if (InputManager.Instance.Aiming && TrajectoryManager.Instance.Power>0f)
-        {
-            SetPowerAndAngleText(TrajectoryManager.Instance.Power, TrajectoryManager.Instance.Angle);
-            ShowPowerAndAngleUi(true);
-        }
+        m_CurrentMenuState = state;
+        Show(state.ToString());
     }
 
-    public void ShowPowerAndAngleUi(bool show)
-    {
-        GameManager.Instance.TrajectoryCanvasObj.SetActive(show);
-    }
-
-    public void SetPowerAndAngleText(float power, float angle)
-    {        
-        float powerScaled = FloatScale(0f, 30f, 0f, 100f, power);
-        GameManager.Instance.PowerText.text = powerScaled.ToString("F2");
-        GameManager.Instance.AngleText.text = Mathf.RoundToInt(angle).ToString() + "°";
-    }
-
-    public void UpdatePlayerHealth(Player.PlayerType type, float curHealth, float maxHealth)
-    {
-        switch (type)
-        {
-            case Player.PlayerType.Player:
-                GameManager.Instance.PlayerHealthImage.fillAmount = curHealth / maxHealth;
-                break;
-            case Player.PlayerType.Enemy:
-                GameManager.Instance.EnemyHealthImage.fillAmount = curHealth / maxHealth;
-                break;
-            default:
-                break;
-        }
-    }
-
-    #endregion
-
-    //-----------------------------------------------------------------
-
-    #region Private Methods
     public float FloatScale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
     {
 
@@ -75,12 +63,35 @@ public class UiManager : Singleton<UiManager>
         return (NewValue);
     }
 
-    private void PlayGame()
-    {
-        GameManager.Instance.MainMenu.SetActive(false);
+    #endregion
 
-        GameManager.Instance.SetState(GameState.PlayerAims);
+    //-----------------------------------------------------------------
+
+    #region Private Methods
+
+    private void Show(string menuKey)
+    {
+        if (MenuDictionary.ContainsKey(menuKey))
+        {
+            Menu menu = MenuDictionary[menuKey];
+            Show(menu);
+        }
+        else
+        {
+            Debug.LogError("Key: " + menuKey + " doesn't exist");
+        }
     }
+
+    private void Show(Menu menu)
+    {
+        Menu.CurrentMenu.Show(false);
+        Menu.CurrentMenu = menu;
+        Menu.CurrentMenu.Show(true);
+    }
+
+  
+
+    
     #endregion
 
     //-----------------------------------------------------------------

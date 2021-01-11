@@ -37,9 +37,7 @@ public class InputManager : Singleton<InputManager>
                 TrajectoryManager.Instance.CalculateTrajectory(m_StartPoint, m_EndPoint);
                 GameManager.Instance.Player.ArmsFollow(m_EndPoint);
                 CameraManager.Instance.SetCameraSize(TrajectoryManager.Instance.Distance);
-
-
-
+                
             }
             if (!m_Aiming && Input.GetMouseButtonDown(0))
             {
@@ -53,14 +51,17 @@ public class InputManager : Singleton<InputManager>
                 m_Aiming = false;
                 if (Mathf.Abs(TrajectoryManager.Instance.ForceVector.x )>1f)
                 {
+                    AudioManager.Instance.PlayThrowSound();
+
                     GameManager.Instance.ShootProjectile(TrajectoryManager.Instance.ForceVector);
+
                     GameManager.Instance.SetState(GameState.PlayerShoots);
 
                 }
 
-                TrajectoryManager.Instance.ShowTrajectory(false);
-                UiManager.Instance.ShowPowerAndAngleUi(false);
-                
+                TrajectoryManager.Instance.ShowTrajectory(false);                
+                UiManager.Instance.InGameMenu.ShowTrajectoryInfo(false);
+                TrajectoryManager.Instance.ResetPowerAndAngle();
                 
             }
         }

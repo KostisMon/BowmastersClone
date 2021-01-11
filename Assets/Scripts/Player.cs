@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     }
     public PlayerType CharType;
     public GameObject LeftArm, RightArm;
-
     private float m_MaxHealth =15f;
     private float m_CurHealth;
 
@@ -24,11 +23,22 @@ public class Player : MonoBehaviour
     //-----------------------------------------------------------------
 
     #region Public Methods
-    
+
     public void TakeDamage(float damage)
     {
         m_CurHealth -= damage;
-        UiManager.Instance.UpdatePlayerHealth(CharType, m_CurHealth, m_MaxHealth);
+        switch (CharType)
+        {
+            case PlayerType.Player:
+                UiManager.Instance.InGameMenu.UpdatePlayerHealth(m_CurHealth, m_MaxHealth);
+                break;
+            case PlayerType.Enemy:
+                UiManager.Instance.InGameMenu.UpdateEnemyHealth(m_CurHealth, m_MaxHealth);
+                break;
+            default:
+                break;
+        }
+
         if (m_CurHealth <= 0f)
         {
             m_CurHealth = 0f;
@@ -58,6 +68,8 @@ public class Player : MonoBehaviour
         LeftArm.transform.up = dir;
     }
 
+    
+
     #endregion
 
     //-----------------------------------------------------------------
@@ -66,11 +78,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         m_CurHealth = m_MaxHealth;
-    }
-
-    void Update()
-    {
-        
     }
 
     #endregion

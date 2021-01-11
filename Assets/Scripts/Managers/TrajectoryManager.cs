@@ -75,6 +75,11 @@ public class TrajectoryManager : Singleton<TrajectoryManager>
         GameManager.Instance.TrajectoryParent.SetActive(show);
     }
 
+    public void ResetPowerAndAngle()
+    {
+        m_Power = 0f;
+        m_Angle = 0f;
+    }
     
     #endregion
 

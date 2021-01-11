@@ -18,7 +18,6 @@ public class Projectile : MonoBehaviour
     {
         m_RigidBody = GetComponent<Rigidbody2D>();
         m_Collider2D = GetComponent<Collider2D>();
-        DisableCollider();
     }
 
     private void Update()
@@ -32,6 +31,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        AudioManager.Instance.PlayHitSound();
         if (collision.CompareTag("Player")  )
         {
             GameManager.Instance.Player.TakeDamage(5f);
@@ -81,7 +81,6 @@ public class Projectile : MonoBehaviour
     public void Shoot(Vector2 force)
     {
         m_RigidBody.AddForce(force, ForceMode2D.Impulse);
-        Invoke("EnableCollider", 0.3f);
     }
 
     public void ActivateRb()
