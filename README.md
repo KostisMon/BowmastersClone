@@ -15,7 +15,7 @@ Animations, more physic based movements, power ups and “side quests” were so
 These features would have improve the aesthetics of the game but having limited time due to full-time work and respecting the time limit,
 did not let me work on these.
 
--All sounds were free to use from ZapSlat (zapslat.com).
+-All sounds were free to use from ZapSlat (https://www.zapslat.com).
 
 -The main asset pack was : Free Platform Game Assets from Bayat Games (https://assetstore.unity.com/packages/2d/environments/free-platform-game-assets-85838).
 
