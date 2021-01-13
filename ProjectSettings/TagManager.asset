@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Border
+  - Ground
+  - Limbs
   layers:
   - Default
   - TransparentFX

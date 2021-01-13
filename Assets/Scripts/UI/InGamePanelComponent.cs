@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+//Menu Component used for the in game menus of the game
 public class InGamePanelComponent : MenuComponent
 {
     //-----------------------------------------------------------------
@@ -19,7 +18,8 @@ public class InGamePanelComponent : MenuComponent
     //-----------------------------------------------------------------
 
     #region Public Methods
-
+    // Constructor, searching and populating variables
+    // Plus setting methods for buttons
     public InGamePanelComponent(Menu menu)
     {
         p_ParentMenu = menu;
@@ -83,41 +83,62 @@ public class InGamePanelComponent : MenuComponent
         }
     }
 
-    public void UpdatePlayerHeath(float curHealth, float maxHealth)
+    //used for updating health depending on the char type
+    public void UpdateCharHeath(Player.PlayerType type, float curHealth, float maxHealth)
     {
-        m_PlayerHealthImage.fillAmount = curHealth / maxHealth;
+        switch (type)
+        {
+            case Player.PlayerType.Player:
+                m_PlayerHealthImage.fillAmount = curHealth / maxHealth;
+
+                break;
+            case Player.PlayerType.Enemy:
+                m_EnemyHealthImage.fillAmount = curHealth / maxHealth;
+
+                break;
+            default:
+                break;
+        }
+    }
+   
+    //Resetting health image fill amounts
+    public void MaxHealth()
+    {
+        m_PlayerHealthImage.fillAmount = 1;
+        m_EnemyHealthImage.fillAmount = 1;
     }
 
-    public void UpdateEnemyHeath(float curHealth, float maxHealth)
-    {
-        m_EnemyHealthImage.fillAmount = curHealth / maxHealth;
-
-    }
-    
+    //used for updating  Char distance
     public void UpdatePlayerDistance(float distance)
     {
         m_CharDistanceText.text = Mathf.RoundToInt(distance).ToString() + " m";
     }
 
+    //used for updating the position of the Distance Indicator ui
     public void UpdateDistanceUiPos()
     {
+        //fetching the rectTransform of the distance UI
         RectTransform rect = m_CharDistanceUi.GetComponent<RectTransform>();
         Vector3 target = Vector3.zero;
+        //if the player aims or shoots the target is the Enemy
         if (GameManager.Instance.GetState() == GameState.PlayerAims || GameManager.Instance.GetState() == GameState.PlayerShoots)
         {
-            target = Camera.main.WorldToScreenPoint(GameManager.Instance.Enemy.GetComponentInChildren<Collider2D>().transform.position);
+            target = Camera.main.WorldToScreenPoint(GameManager.Instance.Enemy.Body.transform.position);
         }
+        //else it is the Player
         else if (GameManager.Instance.GetState() == GameState.EnemyAims || GameManager.Instance.GetState() == GameState.EnemyShoots)
         {
-            target = Camera.main.WorldToScreenPoint(GameManager.Instance.Player.GetComponentInChildren<Collider2D>().transform.position);
+            target = Camera.main.WorldToScreenPoint(GameManager.Instance.Player.Body.transform.position);
         }
         float clampPosy = target.y;
+        //clamping Y position to always stay in screen view
         clampPosy = Mathf.Clamp(clampPosy, rect.rect.height / 1.5f, Screen.height - rect.rect.height / 1.5f);
-
+        //finally setting the new clamped position
         m_CharDistanceUi.transform.position = new Vector3(m_CharDistanceUi.transform.position.x, clampPosy, m_CharDistanceUi.transform.position.z);
         
     }
 
+    //initialises the Distance Indicator ui disabling/enabling the appropriate objects based on the GameState
     public void InitialiseDistanceUi()
     {
         GameState curState = GameManager.Instance.GetState();
@@ -139,22 +160,26 @@ public class InGamePanelComponent : MenuComponent
         }   
     }
 
+    //used to show/hide distance indicator ui
     public void ShowCharDistanceUi(bool show)
     {
         m_CharDistanceUi.SetActive(show);
     }
 
+    //used to show/hide trajectory info
     public void ShowTrajectoryInfo(bool show)
     {
         m_TrajectoryUi.SetActive(show);
     }
 
+    //used to update the power text
     public void SetPowerText(float power)
     {
-        float powerScaled = UiManager.Instance.FloatScale(0f, 30f, 0f, 100f, power);
+        float powerScaled = GameManager.Instance.FloatScale(0f, 30f, 0f, 100f, power);
         m_PowerText.text = powerScaled.ToString("F2");
     }
 
+    //used to update the angle text
     public void SetAngleText(float angle)
     {
         m_AngleText.text = Mathf.RoundToInt(angle).ToString() + "°";
@@ -165,7 +190,7 @@ public class InGamePanelComponent : MenuComponent
     //-----------------------------------------------------------------
 
     #region Private Methods
-
+    //used as an initialization method for the distance indicator ui based on who plays (Player/Enemy)
     private void PrepareDistanceUi(bool forPlayer)
     {
         m_EnemyDistanceArrow.SetActive(forPlayer);

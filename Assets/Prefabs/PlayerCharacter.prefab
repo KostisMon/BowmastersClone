@@ -174,10 +174,10 @@ GameObject:
   - component: {fileID: 7980509734352681240}
   - component: {fileID: 7980509734352681242}
   - component: {fileID: 7980509734352681243}
-  - component: {fileID: 7980509734352681245}
+  - component: {fileID: 2125377986}
   m_Layer: 8
   m_Name: RightFoot
-  m_TagString: Player
+  m_TagString: Limbs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -291,8 +291,8 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 180
---- !u!60 &7980509734352681245
-PolygonCollider2D:
+--- !u!61 &2125377986
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -304,7 +304,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0013394654, y: -0.43243566}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5023723, y: 0.9981884}
@@ -314,13 +314,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.2813285, y: 0.0015942382}
-      - {x: -0.2813285, y: -0.87840575}
-      - {x: 0.24867149, y: -0.87840575}
-      - {x: 0.27867147, y: -0.86840576}
-      - {x: 0.27867147, y: 0.0015942382}
+  serializedVersion: 2
+  m_Size: {x: 0.56, y: 0.86353177}
+  m_EdgeRadius: 0
 --- !u!1 &7980509734426728904
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +333,7 @@ GameObject:
   - component: {fileID: 7980509734426728910}
   m_Layer: 8
   m_Name: LeftArm
-  m_TagString: Player
+  m_TagString: Limbs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -349,13 +345,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7980509734426728904}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.8607572, w: 0.50901586}
   m_LocalPosition: {x: 1.1699982, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7980509734533623429}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 118.80301}
 --- !u!210 &7980509734426728909
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -494,7 +490,7 @@ GameObject:
   - component: {fileID: 7980509734493091309}
   m_Layer: 8
   m_Name: RightArm
-  m_TagString: Player
+  m_TagString: Limbs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -506,13 +502,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7980509734493091303}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.878238, w: 0.4782238}
   m_LocalPosition: {x: -1.1339989, y: 0.011999786, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7980509734533623429}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -122.86101}
 --- !u!210 &7980509734493091304
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -1009,6 +1005,8 @@ MonoBehaviour:
   CharType: 0
   LeftArm: {fileID: 7980509734426728904}
   RightArm: {fileID: 7980509734493091303}
+  Body: {fileID: 7980509734533623426}
+  ProjectileStartPos: {fileID: 7980509735220075516}
 --- !u!1 &7980509735879423024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,10 +1019,10 @@ GameObject:
   - component: {fileID: 7980509735879423026}
   - component: {fileID: 7980509735879423028}
   - component: {fileID: 7980509735879423029}
-  - component: {fileID: 7980509735879423031}
+  - component: {fileID: 732121742}
   m_Layer: 8
   m_Name: LeftFoot
-  m_TagString: Player
+  m_TagString: Limbs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1138,8 +1136,8 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 180
---- !u!60 &7980509735879423031
-PolygonCollider2D:
+--- !u!61 &732121742
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1151,7 +1149,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0013394654, y: -0.43243566}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5023919, y: 1.0007612}
@@ -1161,10 +1159,6 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.28133944, y: -0.00066978455}
-      - {x: -0.28133944, y: -0.8806698}
-      - {x: 0.24866053, y: -0.8806698}
-      - {x: 0.27866054, y: -0.8706698}
-      - {x: 0.27866054, y: -0.00066978455}
+  serializedVersion: 2
+  m_Size: {x: 0.56, y: 0.86353177}
+  m_EdgeRadius: 0

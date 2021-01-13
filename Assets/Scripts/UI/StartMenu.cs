@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//The Menu containing the Start menu panel component
 
 public class StartMenu : Menu
 {
@@ -16,6 +17,8 @@ public class StartMenu : Menu
     //-----------------------------------------------------------------
 
     #region Public Methods
+    //Creating a new start menu panel component and adding it to the list
+
     public override void Awake()
     {
         base.Awake();
@@ -25,6 +28,7 @@ public class StartMenu : Menu
 
     }
 
+    //used for initialization
     public override void Start()
     {
         base.Start();
@@ -32,6 +36,7 @@ public class StartMenu : Menu
 
     }
 
+    //base method for hiding panels
     public void HideAllPanels()
     {
         for (int i = 0; i < m_MainMenuPanelComponentList.Count; i++)
@@ -40,6 +45,7 @@ public class StartMenu : Menu
         }
     }
 
+    //base method for showing start panel component
     public void ShowStartButtonsPanel(bool show)
     {
         HideAllPanels();

@@ -10,8 +10,9 @@ public abstract class MenuComponent
     //-----------------------------------------------------------------
     
     #region  Variables
+    //Every Menu Component has a Panel Parent Object with a Menu attached
     public GameObject PanelObj;
-
+    //The Parent menu on Parent object
     protected Menu p_ParentMenu;
 
     #endregion
@@ -19,7 +20,7 @@ public abstract class MenuComponent
     //-----------------------------------------------------------------
 
     #region Public virtual Methods
-
+    //Shows Parent Panel or it returns if null
     public virtual void ShowComponent(bool show)
     {
         if(PanelObj == null) return;
@@ -30,11 +31,11 @@ public abstract class MenuComponent
     //-----------------------------------------------------------------
 
     #region Public Methods
+    // used for assigning actions to button on initiation
     public void SetMethod(Button button, UnityAction action)
     {
         if (button == null)
         {
-            //Debug.LogError( action.Method.Name );
             return;
         }
         //Remove the existing events
@@ -42,6 +43,7 @@ public abstract class MenuComponent
         //Add your new event
         button.onClick.AddListener(action);
     }
+    // same use but  for Toggles
     public void SetMethod(Toggle button, UnityAction<bool> action)
     {
         //Remove the existing events

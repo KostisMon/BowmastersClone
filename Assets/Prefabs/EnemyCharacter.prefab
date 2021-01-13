@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 926196127862650336}
   m_Layer: 8
   m_Name: LeftArm
-  m_TagString: Player
+  m_TagString: Limbs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,14 +109,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7010732977067856749}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.869, y: -0.258, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.831295, w: 0.55583155}
+  m_LocalPosition: {x: 0.721, y: -0.3330003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2610890909605620064}
   m_Father: {fileID: 8267463913336583582}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 112.464005}
 --- !u!210 &3934201279966662397
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.8689995, y: -0.2579999}
+  m_ConnectedAnchor: {x: 0.7210007, y: -0.33300018}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -332,10 +332,10 @@ GameObject:
   - component: {fileID: 8267463911981608745}
   - component: {fileID: 8267463911981608751}
   - component: {fileID: 8267463911981608750}
-  - component: {fileID: 8267463911981608748}
+  - component: {fileID: 419942884252186652}
   m_Layer: 8
   m_Name: LeftFoot
-  m_TagString: Player
+  m_TagString: Limbs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -449,8 +449,8 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 180
---- !u!60 &8267463911981608748
-PolygonCollider2D:
+--- !u!61 &419942884252186652
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -462,7 +462,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0013394654, y: -0.43243566}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 1}
@@ -472,13 +472,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.28133944, y: -0.00066978455}
-      - {x: -0.28133944, y: -0.8806698}
-      - {x: 0.24866053, y: -0.8806698}
-      - {x: 0.27866054, y: -0.8706698}
-      - {x: 0.27866054, y: -0.00066978455}
+  serializedVersion: 2
+  m_Size: {x: 0.56, y: 0.86353177}
+  m_EdgeRadius: 0
 --- !u!1 &8267463912227244447
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +488,7 @@ GameObject:
   - component: {fileID: 8267463912227244434}
   m_Layer: 8
   m_Name: EnemyCharacter
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -538,6 +534,8 @@ MonoBehaviour:
   CharType: 1
   LeftArm: {fileID: 7010732977067856749}
   RightArm: {fileID: 8267463913367678716}
+  Body: {fileID: 8267463913336583577}
+  ProjectileStartPos: {fileID: 8267463912617869543}
 --- !u!1 &8267463912617869543
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +547,7 @@ GameObject:
   - component: {fileID: 8267463912617869540}
   m_Layer: 8
   m_Name: PredictionStart
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -579,7 +577,7 @@ GameObject:
   - component: {fileID: 8267463913026516857}
   m_Layer: 8
   m_Name: FullBody
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -612,7 +610,7 @@ GameObject:
   - component: {fileID: 8267463913253535162}
   m_Layer: 8
   m_Name: Foots
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -654,11 +652,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8267463913336583582}
   - component: {fileID: 8267463913336583583}
-  - component: {fileID: 8267463913336583570}
   - component: {fileID: 8267463913336583580}
+  - component: {fileID: 345163808}
   m_Layer: 8
   m_Name: Body
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -730,63 +728,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &8267463913336583570
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8267463913336583577}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 2.56}
-    newSize: {x: 2.56, y: 2.56}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 1.13, y: -0.89}
-      - {x: 1.22, y: -0.69}
-      - {x: 1.26, y: -0.55}
-      - {x: 1.28, y: -0.42}
-      - {x: 1.28, y: 0.42}
-      - {x: 1.25, y: 0.61}
-      - {x: 1.15, y: 0.84}
-      - {x: 0.95, y: 1.05}
-      - {x: 0.83, y: 1.14}
-      - {x: 0.63, y: 1.23}
-      - {x: 0.39, y: 1.28}
-      - {x: -0.37, y: 1.28}
-      - {x: -0.53999996, y: 1.26}
-      - {x: -0.71, y: 1.1899999}
-      - {x: -0.85999995, y: 1.12}
-      - {x: -0.91999996, y: 1.0799999}
-      - {x: -1.1, y: 0.90999997}
-      - {x: -1.17, y: 0.82}
-      - {x: -1.26, y: 0.59999996}
-      - {x: -1.28, y: 0.44}
-      - {x: -1.28, y: -0.45999998}
-      - {x: -1.26, y: -0.58}
-      - {x: -1.1999999, y: -0.79999995}
-      - {x: -1.11, y: -0.95}
-      - {x: -0.97999996, y: -1.09}
-      - {x: -0.77, y: -1.22}
-      - {x: -0.71, y: -1.24}
-      - {x: -0.52, y: -1.28}
-      - {x: 0.53, y: -1.28}
-      - {x: 0.74, y: -1.23}
-      - {x: 0.91999996, y: -1.12}
-      - {x: 1.05, y: -1}
 --- !u!50 &8267463913336583580
 Rigidbody2D:
   serializedVersion: 4
@@ -808,6 +749,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!70 &345163808
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8267463913336583577}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.017064095, y: -0.023015976}
+  m_Size: {x: 1.8774204, y: 2.4012566}
+  m_Direction: 0
 --- !u!1 &8267463913367678716
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,7 +781,7 @@ GameObject:
   - component: {fileID: 8267463913367678710}
   m_Layer: 8
   m_Name: RightArm
-  m_TagString: Player
+  m_TagString: Limbs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -836,14 +793,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8267463913367678716}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.832, y: -0.258, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.73493713, w: 0.6781353}
+  m_LocalPosition: {x: -0.832, y: -0.333, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7335090345040179976}
   m_Father: {fileID: 8267463913336583582}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -94.604004}
 --- !u!210 &8267463913367678707
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -941,7 +898,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.83200073, y: -0.2579999}
+  m_ConnectedAnchor: {x: -0.83200073, y: -0.33300018}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -978,10 +935,10 @@ GameObject:
   - component: {fileID: 8267463913474793987}
   - component: {fileID: 8267463913474793985}
   - component: {fileID: 8267463913474793984}
-  - component: {fileID: 8267463913474793990}
+  - component: {fileID: 1187345128995428881}
   m_Layer: 8
   m_Name: RightFoot
-  m_TagString: Player
+  m_TagString: Limbs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1095,8 +1052,8 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 180
---- !u!60 &8267463913474793990
-PolygonCollider2D:
+--- !u!61 &1187345128995428881
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1108,7 +1065,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0013394654, y: -0.43243566}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 1}
@@ -1118,10 +1075,6 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.2813285, y: 0.0015942382}
-      - {x: -0.2813285, y: -0.87840575}
-      - {x: 0.24867149, y: -0.87840575}
-      - {x: 0.27867147, y: -0.86840576}
-      - {x: 0.27867147, y: 0.0015942382}
+  serializedVersion: 2
+  m_Size: {x: 0.56, y: 0.86353177}
+  m_EdgeRadius: 0

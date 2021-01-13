@@ -8,7 +8,6 @@ public class Menu : MonoBehaviour
     
     #region Variables
     public static Menu CurrentMenu;
-    public static int MenusLoaded;
     #endregion
 
     //-------------------------------------------------------------------------
@@ -25,9 +24,9 @@ public class Menu : MonoBehaviour
 
     }
 
+    //Setting Current menu for using it when swapping between menus
     public virtual void Awake()
     {
-        MenusLoaded++;
         if (CurrentMenu == null)
         {
             CurrentMenu = this;
@@ -39,30 +38,10 @@ public class Menu : MonoBehaviour
     //-------------------------------------------------------------------------
 
     #region Public Methods
-
+    //Show/hide menu
     public void Show(bool show)
     {
         gameObject.SetActive(show);
-    }
-
-    public void SetMethod(Button button, UnityAction action)
-    {
-        if (button == null)
-        {
-            return;
-        }
-        //Remove the existing events
-        button.onClick.RemoveAllListeners();
-        //Add your new event
-        button.onClick.AddListener(action);
-    }
-
-    public void SetMethod(Toggle button, UnityAction<bool> action)
-    {
-        //Remove the existing events
-        button.onValueChanged.RemoveAllListeners();
-        //Add your new event
-        button.onValueChanged.AddListener(action);
     }
 
     #endregion
