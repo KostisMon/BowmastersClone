@@ -7,7 +7,7 @@ The process of making it began by researching trajectories motion, in order to g
 The art style was decided based on having limited time, and finding free assets on the Asset Store and editing some in Photoshop.
 One major decision was to use Physics force for the projectile movement, giving it a more natural look.
 Another decision was to rely on Unity’s Cinemachine for the camera system, this saved me precious time,
-but also gave me a chance to use this very powerful (while only scraping its potentials).
+but also gave me a chance to use this very powerful tool (while only scraping its potentials).
 I decided to use State Machine and Singleton Patterns for implementing my mechanics and general development.
 As the time was limited and they suited the project's complexity I found those two, to be ideal for this test.
 
